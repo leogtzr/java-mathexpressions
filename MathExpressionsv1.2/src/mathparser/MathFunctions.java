@@ -50,7 +50,6 @@ public class MathFunctions {
 
     /**
      * Seno.
-     * @throws ParsingException.
      */
     public static double math_sin(double x) {
         return (((x % PI) - 0.0) < EPSILON) ? 0.0 : sin(x);
@@ -58,6 +57,7 @@ public class MathFunctions {
 
     /**
      * Factorial.
+     * @param value
      * @throws ParsingException si se sale del rango de un double.
      */
     public static double factorial(double value) throws ParsingException {

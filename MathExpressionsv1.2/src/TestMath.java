@@ -1,11 +1,9 @@
 /**
  * Main Class
- *
  * @author Leo Gutiérrez Ramírez <leogutierrezramirez@gmail.com>
  */
 import mathparser.Parser;
 import mathparser.ParsingException;
-
 public class TestMath {
 
     /**
@@ -24,12 +22,9 @@ public class TestMath {
                 parser.evaluate(s);
                 
                 System.out.println("BIEN   [" + s + "]");
-                
             } catch (ParsingException ex) {
                 System.out.println(ex.getMessage() + "[" + s + "]");
             }
         }
-
     }
-
 }
