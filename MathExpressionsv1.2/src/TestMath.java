@@ -12,16 +12,16 @@ public class TestMath {
     public static void main(String[] args) {
 
         String[] expresiones = {
-            "1+2+3", "x^2 + 1 - sin(pi * 0.3) * 2.123", "1+", "1+cos(1+2)-acos", "0", "1+sin^2"
+            "1+!0", "1-2", "1+2-", "1+!(0+2^3)"
         };
 
         Parser parser = new Parser();
 
         for (String s : expresiones) {
             try {
-                parser.evaluate(s);
+                parser.parse(s);
+                System.out.println("Value: " + parser.getNumericAnswer());
                 
-                System.out.println("BIEN   [" + s + "]");
             } catch (ParsingException ex) {
                 System.out.println(ex.getMessage() + "[" + s + "]");
             }

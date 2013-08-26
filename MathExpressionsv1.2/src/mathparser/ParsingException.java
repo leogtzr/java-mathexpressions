@@ -13,7 +13,13 @@ public class ParsingException extends Exception {
      * evaluación.
      */
     private int column;
+    
+    private ErrorType errorType;
 
+    public ErrorType getErrorType() {
+        return errorType;
+    }
+    
     /**
      * Construye un ParsingException con la cadena mensaje dada como
      * parámetro.
@@ -21,6 +27,11 @@ public class ParsingException extends Exception {
      */
     public ParsingException(final String message) {
         super(message);
+    }
+    
+    public ParsingException(final String message, ErrorType errorType) {
+        super(message);
+        this.errorType = errorType;
     }
 
     /**
@@ -32,6 +43,23 @@ public class ParsingException extends Exception {
     public ParsingException(final String message, final int column) {
         super(message);
         this.column = column;
+    }
+    
+    /**
+     * Construye un ParsingException con la cadena mensaje dada como
+     * parámetro y la posición donde se detectó el error.
+     * @param message Descripción del error que se detectó.
+     * @param column La posición donde se detectó el error.
+     */
+    public ParsingException(final String message, final int column, ErrorType errorType) {
+        super(message);
+        this.column = column;
+        this.errorType = errorType;
+    }
+    
+    public ParsingException(ErrorType errorType, final int column) {
+        this.column = column;
+        this.errorType = errorType;
     }
 
     /**
