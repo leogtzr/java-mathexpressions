@@ -1,16 +1,14 @@
 /**
- * Main Class
+ * Main Class Tester
  * @author Leo Gutiérrez Ramírez <leogutierrezramirez@gmail.com>
  */
 import java.util.Scanner;
 import mathparser.CustomFunction;
 import mathparser.Parser;
 import mathparser.ParsingException;
+import mathparser.SimpleFunction;
 public class TestMath {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
         Scanner scan = new Scanner(System.in);
@@ -32,6 +30,19 @@ public class TestMath {
                     sum += i;
                 }
                 return (double)sum;
+            }
+        });
+        
+        parser.addSimpleFunction("fibonacci", new SimpleFunction("fibonacci") {
+            @Override
+            public double functionCode(double a) {
+                double i = 1.0;
+                double j = 0.0;
+                for(int k = 1; k <= a; k++) {
+                    j += i;
+                    i = j - i;
+                }
+                return j;
             }
         });
                

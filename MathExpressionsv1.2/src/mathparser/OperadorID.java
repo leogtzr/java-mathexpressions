@@ -1,7 +1,6 @@
 package mathparser;
 
 /**
- *
  * @author Leo Gutiérrez Ramírez <leogutierrezramirez@gmail.com>
  */
 public enum OperadorID {

@@ -13,6 +13,7 @@ import java.util.Locale;
 public final class Parser {
     
     private HashMap<String, CustomFunction> customFunctions = null;
+    private HashMap<String, SimpleFunction> simpleFunctions = null;
     private final Lexer lex = new Lexer();
     private double respuestaNumerica = 0.0;
     private final Variables userVar;
@@ -21,6 +22,7 @@ public final class Parser {
     public Parser() {
         userVar = new Variables();
         customFunctions = new HashMap<>();
+        simpleFunctions = new HashMap<>();
     }
     
     public void addCustomFunction(String name, CustomFunction cf) {
@@ -28,6 +30,13 @@ public final class Parser {
             throw new IllegalArgumentException("function '" + name + "' is reserved");
         }
         this.customFunctions.put(name.toUpperCase(java.util.Locale.getDefault()), cf);
+    }
+    
+    public void addSimpleFunction(String name, SimpleFunction sf) {
+        if(isFunction(name.toUpperCase(java.util.Locale.getDefault()))) {
+            throw new IllegalArgumentException("function '" + name + "' is reserved");
+        }
+        this.simpleFunctions.put(name.toUpperCase(java.util.Locale.getDefault()), sf);
     }
 
     public double getNumericAnswer() {
@@ -97,7 +106,6 @@ public final class Parser {
         }
 
         userVar.addVar("ans", respuestaNumerica);
-        System.out.println(userVar.getVarList());
     }
 
     private double parseLevel1() throws ParsingException {
@@ -252,8 +260,7 @@ public final class Parser {
         
         if(lex.getCurrentType() == TokenType.FUNCION) {
             String fn_name = lex.getToken().toUpperCase(java.util.Locale.getDefault());
-            if (isFunction(fn_name) == false && existsCustomFunction(fn_name) == false) {
-                System.out.println(this.customFunctions);
+            if (isFunction(fn_name) == false && existsCustomFunction(fn_name) == false && existsSimpleFunction(fn_name) == false) {
                 throw new ParsingException("unknown function " + fn_name, lex.getPos(), ErrorType.FUNCION_DESCONOCIDA);
             }
             if (isFunctionDouble(fn_name)) {
@@ -261,7 +268,9 @@ public final class Parser {
                 lex.nextToken();
                 double lhs = parseLevel2();
                 
-                System.out.println("[" + lex.getToken() + "]");
+                /*if(!lex.getToken().equals(",")) {
+                    throw new ParsingException(", expected", lex.getPos(), ErrorType.ERROR_SINTAXIS);
+                }*/
                 
                 lex.nextToken();
                 double rhs = parseLevel2();
@@ -270,15 +279,10 @@ public final class Parser {
                 
                 answer = eval_function_double(fn_name, lhs, rhs);
                 
-                // System.out.println("Last token[");
-                
                 /*if (!lex.getToken().equals(")")) {
                     throw new ParsingException("')' expected 276", lex.getPos(), ErrorType.PARENTESIS_FALTANTE);
                 }*/
-                
-            } /* comprobación de funciones custom */ 
-            
-            else if(existsCustomFunction(fn_name)) {
+            } else if(existsCustomFunction(fn_name)) {
                 lex.nextToken();
                 lex.nextToken();
                 
@@ -293,9 +297,15 @@ public final class Parser {
                 answer = this.customFunctions.get(fn_name).functionCode(lhs, rhs);
             }
             else {
-                lex.nextToken();
-                double exp = parseLevel10();
-                answer = eval_function(fn_name, exp);
+                if(existsSimpleFunction(fn_name)) {
+                    lex.nextToken();
+                    double exp = parseLevel10();
+                    answer = this.simpleFunctions.get(fn_name).functionCode(exp);
+                } else {
+                    lex.nextToken();
+                    double exp = parseLevel10();
+                    answer = eval_function(fn_name, exp);
+                }
             }
         } else {
             answer = parseLevel10();
@@ -652,7 +662,11 @@ public final class Parser {
     }
     
     private boolean existsCustomFunction(String functionName) {
-        return this.customFunctions.containsKey(functionName);
+        return customFunctions.containsKey(functionName);
+    }
+    
+    private boolean existsSimpleFunction(String functionName) {
+        return simpleFunctions.containsKey(functionName);
     }
 
     private boolean isFunction(final String functionName) {
