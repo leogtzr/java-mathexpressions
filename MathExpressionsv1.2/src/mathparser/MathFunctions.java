@@ -52,7 +52,7 @@ public class MathFunctions {
      * Seno.
      */
     public static double math_sin(double x) {
-        return (((x % PI) - 0.0) < EPSILON) ? 0.0 : sin(x);
+        return ((abs(x % PI) - 0.0) < EPSILON) ? 0.0 : sin(x);
     }
 
     /**
