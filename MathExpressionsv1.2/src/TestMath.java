@@ -15,25 +15,8 @@ public class TestMath {
         scan.useDelimiter("\n");
         
         Parser parser = new Parser();
-        parser.addCustomFunction("max2", new CustomFunction("max2") {
-            @Override
-            public double functionCode(double a, double b) {
-                return (a + b);
-            }
-        });
-        
-        parser.addCustomFunction("sumatoria", new CustomFunction("sumatoria") {
-            @Override
-            public double functionCode(double begin, double end) {
-                long sum = 0;
-                for(int i = (int)begin; i < (int)end; i++) {
-                    sum += i;
-                }
-                return (double)sum;
-            }
-        });
-        
-        parser.addSimpleFunction("fibonacci", new SimpleFunction("fibonacci") {
+
+        SimpleFunction fibFunc = new SimpleFunction("fibonacci") {
             @Override
             public double functionCode(double a) {
                 double i = 1.0;
@@ -44,30 +27,16 @@ public class TestMath {
                 }
                 return j;
             }
-        });
-               
-        double ans;
+        };
         
-        String exprStr;
-        while((exprStr = scan.nextLine()) != null) {
-            try {
-                
-                /*if(parser.isExpressionOk(exprStr)) {
-                    System.out.println("Expressión correcta ... ");
-                    parser.parse(exprStr);
-                    ans = parser.getNumericAnswer();
-                    System.out.println("Result[" + ans + "]");
-                } else {
-                    System.out.println("La expresión no es válida.");
-                }*/
-                
-                parser.parse(exprStr);
-                ans = parser.getNumericAnswer();
-                System.out.println("Result[" + ans + "]");
-                
-            } catch(ParsingException ex) {
-                System.out.println(ex);
-            }
+        parser.addSimpleFunction("fibonacci", fibFunc);
+        
+        try {
+            // The function now is available
+            parser.parse("sqrt(fibonacci(8)+4)");
+            System.out.println(parser.getNumericAnswer());
+        } catch(ParsingException ex) {
+            System.out.println(ex);
         }
     }
 }

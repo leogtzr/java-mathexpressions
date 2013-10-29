@@ -38,7 +38,15 @@ public final class Parser {
         }
         this.simpleFunctions.put(name.toUpperCase(java.util.Locale.getDefault()), sf);
     }
-
+    
+    public void addVariable(String name, double value) {
+        if(isFunction(name) || userVar.isConstant(name) || name.equals("e") || 
+                name.equals("pi") || name.equals("g") || name.equals("random")) {
+            throw new IllegalArgumentException("'" + name + "' is a reserved word");
+        }
+        userVar.addVar(name, value);
+    }
+    
     public double getNumericAnswer() {
         return respuestaNumerica;
     }

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MathExpressions v1.3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Share+Tech' rel='stylesheet' type='text/css'>
+
+        <style type="text/css">
+            body {
+                background-color: #D8D8D8;
+            }
+
+            .code {
+                background-color: #9999ff;
+                font-family: 'Share Tech', sans-serif;
+                font-size: 20px;
+            }
+
+        </style>
+
+        <script>
+            $(function() {
+
+            });
+        </script>
+
+    </head>
+    <body>
+        <h1>
+            Using MathExpressions v1.3
+        </h1>
+
+        <hr/>
+
+        <h2>
+            Evaluate an expression | Evaluar una expresión
+        </h2>
+        <div class="code">
+            Parser parser = new Parser();
+            <br/>
+            try { <br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;parser.parse("1.2 * sin(pi+2) - cos(factorial(5))"); <br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;System.out.println(parser.getNumericAnswer());<br/>
+            } catch(ParsingException ex) { <br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;System.out.println(ex); <br/>
+            }<br/>
+        </div>
+
+        <h2>
+            Working with variables | Trabajo con variables
+        </h2>
+        You can add variables with <b>Parser.addVariable(String name, double value)</b>
+        <br/>
+        <br/>
+        <div class="code">
+            Parser parser = new Parser();
+            <br/>
+            parser.addVariable("x", 0.3452);
+        </div>
+
+        or you cand modify the list of variables directly with:
+        <div class="code">
+            parser.getUserVars()
+        </div>
+
+        <h2>
+            Domain check for functions | Verificación de dominio para las funciones.
+        </h2>
+
+        MathExpressions v1.3 has the following functions:
+
+        <ul>
+            <li>abs</li>
+            <li>exp</li>
+            <li>sign</li>
+            <li>sqrt</li>
+            <li>raiz</li>
+            <li>log</li>
+            <li>ln</li>
+            <li>log10</li>
+            <li>sin</li>
+            <li>cos</li>
+            <li>tan</li>
+            <li>asin</li>
+            <li>acos</li>
+            <li>atan</li>
+            <li>factorial</li>
+            <li>cot</li>
+            <li>sec</li>
+            <li>csc</li>
+            <li>sinh</li>
+            <li>cosh</li>
+            <li>tanh</li>
+            <li>coth</li>
+            <li>sech</li>
+            <li>csch</li>
+            <li>acsc</li>
+            <li>asec</li>
+            <li>asinh</li>
+            <li>acosh</li>
+            <li>acsch</li>
+            <li>atanh</li>
+            <li>power</li>
+            <li>max</li>
+            <li>min</li>
+            <li>mod</li>
+            <li>acot</li>
+            <li>acoth</li>
+            <li>log2</li>
+            <li>rand</li>
+            <li>asech</li>
+        </ul>
+        
+        MathExpressions <b>checks the domain for every function</b>, example:
+        <br/>
+        
+        <div class="code">
+            try { <br/>
+               &thinsp;&thinsp;&thinsp;&thinsp;parser.parse("acos(1.2)+2.5"); <br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;System.out.println(parser.getNumericAnswer()); <br/>
+        } catch(ParsingException ex) { <br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;    System.out.println(ex); <br/>
+        } <br/>
+        </div>
+        
+        it throws an exception <b>mathparser.ParsingException: Fuera de dominio para la función 'acos': 1.2</b>
+        
+        <h2>
+            Custom Functions | Funciones personalizadas (definidas por el usuario).
+        </h2>
+        
+        You can extend the parser implementing the function <b>functionCode</b> from the CustomFunction class.
+        <br/>
+        <br/>
+        <b>Example:</b>
+        <div class="code">
+            Parser parser = new Parser();
+            <br/>
+            <br/>
+        
+        CustomFunction cfSum = new CustomFunction("sumatoria") {<br/>
+           &thinsp;&thinsp;&thinsp;&thinsp;@Override<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;public double functionCode(double begin, double end) {<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;long sum = 0;<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;for(int i = (int)begin; i <= (int)end; i++) {<br/>
+                    &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;sum += i;<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;}<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;return (double)sum;<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;}<br/>
+        };<br/>
+        <br/>
+        <b>parser.addCustomFunction("sumatoria", cfSum);</b><br/>
+        <br/>
+        try {<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    // The function now is available<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    parser.parse("sumatoria(1, 10)^2 + sin(pi-2)");<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    System.out.println(parser.getNumericAnswer());<br/>
+        } catch(ParsingException ex) {<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    System.out.println(ex);<br/>
+        }<br/>
+        </div>
+        <br/>
+        you can also extend the parser with a <b>SimpleFunction</b> (function with only an argument), example:
+        <br/>
+        <br/>
+        <div class="code">
+            Parser parser = new Parser();<br/>
+            <br/>
+        SimpleFunction fibFunc = new SimpleFunction("fibonacci") {<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    @Override<br/>
+        &thinsp;&thinsp;&thinsp;&thinsp;    public double functionCode(double a) {<br/>
+         &thinsp;&thinsp;&thinsp;&thinsp; &thinsp;&thinsp;&thinsp;&thinsp;       double i = 1.0;<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;double j = 0.0;<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;for(int k = 1; k <= a; k++) {<br/>
+                    &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;j += i;<br/>
+                    &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;i = j - i;<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;}<br/>
+                &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;return j;<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;}<br/>
+        };<br/>
+        <br/>
+        parser.addSimpleFunction("fibonacci", fibFunc);<br/>
+        
+        try {<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;// The function now is available<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;parser.parse("sqrt(fibonacci(8)+4)");<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;System.out.println(parser.getNumericAnswer());<br/>
+        } catch(ParsingException ex) {<br/>
+            &thinsp;&thinsp;&thinsp;&thinsp;System.out.println(ex);<br/>
+        }<br/>
+        </div>
+        
+        <h2>
+            Operators | Operadores
+        </h2>
+        
+        The following operators are supported:
+        
+        <ul>
+            <li>
+                +
+            </li>
+            <li>
+                -
+            </li>
+            <li>
+                *
+            </li>
+            <li>
+                /
+            </li>
+            <li>
+                ^
+            </li>
+            <li>
+                %
+            </li>
+            <li>
+                =
+            </li>
+            <li>
+                ==
+            </li>
+            <li>
+                !=
+            </li>
+            <li>
+                <
+            </li>
+            <li>
+                >
+            </li>
+            <li>
+                <=
+            </li>
+            <li>
+                >=
+            </li>
+            <li>
+                &&
+            </li>
+            <li>
+                ||
+            </li>
+        </ul>
+        
+        <h1>
+            Author
+        </h1>
+        <h4>
+            <i>Leonardo Gutiérrez Ramírez</i>
+            <br/>
+            <br/>
+            leorocko13@hotmail.com
+            <br/>
+            leogutierrezramirez@gmail.com
+        </h4>
+
+    </body>
+</html>
