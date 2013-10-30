@@ -4,23 +4,33 @@
 
 MathExpressions, a library to evaluate math expressions.
 
+
+
 Evaluate an expression | Evaluar una expresión
 
 Parser parser = new Parser(); 
 try { 
-    parser.parse("1.2 * sin(pi+2) - cos(factorial(5))"); 
-    System.out.println(parser.getNumericAnswer());
+	parser.parse("1.2 * sin(pi+2) - cos(factorial(5))"); 
+	System.out.println(parser.getNumericAnswer());
 } catch(ParsingException ex) { 
-    System.out.println(ex); 
+	System.out.println(ex); 
 }
+
+
 Working with variables | Trabajo con variables
 
 You can add variables with Parser.addVariable(String name, double value) 
 
 Parser parser = new Parser(); 
 parser.addVariable("x", 0.3452);
-or you cand modify the list of variables directly with:
+
+
+or you can modify the list of variables directly with:
+
 parser.getUserVars()
+
+
+
 Domain check for functions | Verificación de dominio para las funciones.
 
 MathExpressions v1.3 has the following functions:
