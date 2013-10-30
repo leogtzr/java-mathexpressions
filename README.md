@@ -5,7 +5,7 @@
 MathExpressions, a library to evaluate math expressions.
 
 
-
+```
 Parser parser = new Parser(); 
 
 
@@ -17,8 +17,8 @@ try {
 } catch(ParsingException ex) { 
 
 	System.out.println(ex); 
-
 }
+```
 
 
 check out the doc for more information.
