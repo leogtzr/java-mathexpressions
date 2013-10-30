@@ -14,29 +14,27 @@ public class Lexer {
      * Representa la expresión a interpretar para un manejo más fácil.
      */
     private char[] expression = null;
-    
     private TokenType tipoTokenActual = TokenType.NADA;
-
-    public TokenType getCurrentType() {
-        return tipoTokenActual;
-    }
     
     /**
      * Contiene el caracter actual leído.
      */
     private int i = 0;
+    /**
+     * El token actual obtenido de la expresión.
+     */
+    private String token = "";
     
     public int getPos() {
         return i;
     }
     
-    /**
-     * El token actual obtenido de la expresión.
-     */
-    private String token = "";
-
     public String getToken() {
         return token;
+    }
+    
+    public TokenType getCurrentType() {
+        return tipoTokenActual;
     }
     
     public Lexer() {
@@ -50,22 +48,18 @@ public class Lexer {
     }
     
     public boolean validateParentheses() {
-        
         int openBraces = 0;
-        for(char c : this.expression) {
+        for(char c : expression) {
             openBraces += c == '(' ? 1 : (c == ')') ? -1 : 0;
         }
         return openBraces == 0;
     }
     
     public void init(final String expr) throws ParsingException {
-        
-        this.expression = (expr.replaceAll("\\s+", "") + '\u0000').toCharArray();
-        
+        expression = (expr.replaceAll("\\s+", "") + '\u0000').toCharArray();
         if(!validateParentheses()) {
             throw new ParsingException("unbalanced parentheses");
         }
-        
         i = 0;
     }
     
@@ -90,11 +84,10 @@ public class Lexer {
         tipoTokenActual = TokenType.NADA;
         token = "";
 
-        if(expression[i] == ' ' || expression[i] == '\t' || 
-                expression[i] == '\n') {
+        if(Character.isWhitespace(expression[i])) {
             i++;
         }
-
+        
         if(expression[i] == '\u0000') {
             tipoTokenActual = TokenType.DELIMITADOR;
             return;
@@ -244,16 +237,8 @@ public class Lexer {
                 token += expression[i];
                 i++;
             }
-            // Verificar si es función o variable:
-            if (expression[i] == '(') {
-                tipoTokenActual = TokenType.FUNCION;
-            } else {
-                //System.out.println("Var: " + token);
-                tipoTokenActual = TokenType.VARIABLE;
-            }
-            return;
+            tipoTokenActual = expression[i] == '(' ? TokenType.FUNCION : TokenType.VARIABLE;
         }
-        
     }
     
     public void setType(TokenType type) {
