@@ -56,5 +56,19 @@ check out the doc for more information.
 Operators
 
 ```
-[x] ok....
+[x] +
+[x] -
+[x] *
+[x] /
+[x] ^
+[x] %
+[x] =
+[x] ==
+[x] !=
+[x] <
+[x] >
+[x] <=
+[x] >=
+[x] &&
+[x] ||
 ```
