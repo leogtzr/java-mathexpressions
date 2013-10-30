@@ -1,10 +1,15 @@
 package mathparser;
 
 /**
+ * Lexer for the Parser.
  * @author Leo Gutiérrez Ramírez | leogutierrezramirez@gmail.com
  */
 public class Lexer {
 
+    public enum TokenType {
+        NADA, DELIMITADOR, NUMERO, VARIABLE, FUNCION, DESCONOCIDO, OPERADOR
+    }
+    
     /**
      * Representa la expresión a interpretar para un manejo más fácil.
      */

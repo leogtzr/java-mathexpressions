@@ -3,6 +3,9 @@ package mathparser;
 import java.util.HashMap;
 import java.util.Locale;
 
+import mathparser.Lexer.TokenType;
+import static mathparser.Lexer.TokenType.*;
+
 /**
  * Evalua una cadena y devuelve su valor numérico.
  *
@@ -71,7 +74,9 @@ public final class Parser {
             
             respuestaNumerica = parseLevel1();
             
-            if(lex.getCurrentType() != TokenType.DELIMITADOR) {
+            // Lexer.TokenType.DELIMITADOR
+            
+            if(lex.getCurrentType() != DELIMITADOR) {
                 throw new ParsingException("unexpected expression '" + lex.getToken() + "'", lex.getPos(), ErrorType.PARTE_NO_ESPERADA);
             }
             
@@ -109,7 +114,7 @@ public final class Parser {
 
         respuestaNumerica = parseLevel1();
 
-        if(lex.getCurrentType() != TokenType.DELIMITADOR) {
+        if(lex.getCurrentType() != DELIMITADOR) {
             throw new ParsingException("unexpected expression '" + lex.getToken() + "'", lex.getPos(), ErrorType.PARTE_NO_ESPERADA);
         }
 
@@ -118,7 +123,7 @@ public final class Parser {
 
     private double parseLevel1() throws ParsingException {
 
-        if (lex.getCurrentType() == TokenType.VARIABLE) {
+        if (lex.getCurrentType() == VARIABLE) {
             
             TokenType tokenTemp = lex.getCurrentType();
             String tokenNow = lex.getToken();
@@ -266,7 +271,7 @@ public final class Parser {
     private double parseLevel9() throws ParsingException {
         double answer = 0.0;
         
-        if(lex.getCurrentType() == TokenType.FUNCION) {
+        if(lex.getCurrentType() == FUNCION) {
             String fn_name = lex.getToken().toUpperCase(java.util.Locale.getDefault());
             if (isFunction(fn_name) == false && existsCustomFunction(fn_name) == false && existsSimpleFunction(fn_name) == false) {
                 throw new ParsingException("unknown function " + fn_name, lex.getPos(), ErrorType.FUNCION_DESCONOCIDA);
@@ -340,11 +345,9 @@ public final class Parser {
     }
 
     // Functions ...
-    
-
     private double parseLevel10() throws ParsingException {
         
-        if (lex.getCurrentType() == TokenType.DELIMITADOR) {
+        if (lex.getCurrentType() == DELIMITADOR) {
             
             if(lex.getToken().isEmpty()) {
                 throw new ParsingException("syntax error", lex.getPos(), ErrorType.ERROR_SINTAXIS);
@@ -352,19 +355,12 @@ public final class Parser {
             
             if (lex.getToken().charAt(0) == '(') {
                 lex.nextToken();
-
                 double answer = parseLevel2();
                 
-                // System.out.println("Final[" + lex.getToken() + "]");
-                
                 lex.nextToken();
-                
-                // System.out.println("\t\tDespués del next[" + lex.getToken() + "], " + lex.getCurrentType());
-                
                 /*if(!lex.getToken().isEmpty() && lex.getToken().equals(")")) {
                     throw new ParsingException("')' expected [...]", lex.getPos(), ErrorType.PARENTESIS_FALTANTE);
                 }*/
-                
                 return answer;
             }
         }
@@ -638,7 +634,7 @@ public final class Parser {
             case "RANDOM":
                 return Math.random();
         }
-
+        
         double ans;
 
         if (userVar.existVar(var_name)) {

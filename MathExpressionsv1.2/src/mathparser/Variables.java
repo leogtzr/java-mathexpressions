@@ -151,7 +151,7 @@ public final class Variables {
      */
     private static final class Variable {
 
-        private String var_name;
+        private final String var_name;
         private boolean isConstant;
         private String descripcion;
         private double value;

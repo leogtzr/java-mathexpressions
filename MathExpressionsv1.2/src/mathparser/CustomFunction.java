@@ -1,6 +1,9 @@
 package mathparser;
 
 /**
+ * 
+ * CustomFunctions.
+ * 
  * @author Leo Gutiérrez Ramírez | leogutierrezramirez@gmail.com
  */
 public abstract class CustomFunction {

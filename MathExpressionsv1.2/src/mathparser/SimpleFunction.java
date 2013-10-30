@@ -1,6 +1,7 @@
 package mathparser;
 
 /**
+ * SimpleFunction.
  * @author Leo Gutiérrez Ramírez | leogutierrezramirez@gmail.com
  */
 public abstract class SimpleFunction {

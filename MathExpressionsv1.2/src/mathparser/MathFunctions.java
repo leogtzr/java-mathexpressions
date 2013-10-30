@@ -38,7 +38,7 @@ import java.util.Random;
  */
 public class MathFunctions {
 
-    private static Random random;
+    private final static Random random;
     
     private MathFunctions() {}
     
@@ -77,13 +77,12 @@ public class MathFunctions {
         }
 
         if (res == 0) {
-            res = 1.0;        // 0! is per definition 1
+            res = 1.0;        // 0! = 1
         }
         
         if(Double.isNaN(res) || Double.isInfinite(res)) {
             throw new ParsingException("Número fuera de los límites de un double.");
         }
-        
         return res;
     }
 
@@ -93,7 +92,6 @@ public class MathFunctions {
      */
     public static double logarithm(double x) throws ParsingException {
         double result = log(x);
-
         if (Double.isInfinite(result) || Double.isNaN(result)) {
             throw new ParsingException("Número fuera de dominio: " + result);
         }
@@ -365,15 +363,15 @@ public class MathFunctions {
      * Logaritmo en base 2.
      * @throws ParsingException Si se sale del dominio de la función.
      */
-	public static double math_log2(double x) throws ParsingException {
-		if(x < 0.0) {
+    public static double math_log2(double x) throws ParsingException {
+        if (x < 0.0) {
             throw new ParsingException("Fuera de rango." + x);
-		} else if(x == 0.0 || abs(x) < 0.00000000000001) {
+        } else if (x == 0.0 || abs(x) < 0.00000000000001) {
             throw new ParsingException("Fuera de rango." + x);
-		} else {
-			return log(x) / log(2.0);
-		}
-	}
+        } else {
+            return log(x) / log(2.0);
+        }
+    }
 
     /**
      * Secante.
@@ -401,12 +399,12 @@ public class MathFunctions {
      */
 	public static double math_sqrt(double x) throws ParsingException {
 		if(abs(x) < EPSILON) {
-			return 0.0;
+                    return 0.0;
 		}
 		if(x > 0.0) {
-			return sqrt(x);
+                    return sqrt(x);
 		} else {
-            throw new ParsingException("Fuera de rango." + x);
+                    throw new ParsingException("Fuera de rango." + x);
 		}
 	}
 
@@ -429,13 +427,13 @@ public class MathFunctions {
      */
     public static double rand_0_to_1() {
         return random.nextDouble();
-	}
+    }
 
     /**
      * Devuelve un número aleatorio entre los números especificados.
      */
 	public static int rand_int_between(int min, int max) {
-        return random.nextInt(max - min + 1) + min;
+            return random.nextInt(max - min + 1) + min;
 	}
     
 }
