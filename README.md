@@ -50,9 +50,6 @@ try {
 ```
 
 
-check out the doc for more information.
-
-
 Operators
 
 ```
@@ -72,3 +69,49 @@ Operators
 [x] &&
 [x] ||
 ```
+
+Functions
+
+```
+[x] abs
+[x] exp
+[x] sign
+[x] sqrt
+[x] raiz
+[x] log
+[x] ln
+[x] log10
+[x] sin
+[x] cos
+[x] tan
+[x] asin
+[x] acos
+[x] atan
+[x] factorial
+[x] cot
+[x] sec
+[x] csc
+[x] sinh
+[x] cosh
+[x] tanh
+[x] coth
+[x] sech
+[x] csch
+[x] acsc
+[x] asec
+[x] asinh
+[x] acosh
+[x] acsch
+[x] atanh
+[x] power
+[x] max
+[x] min
+[x] mod
+[x] acot
+[x] acoth
+[x] log2
+[x] rand
+[x] asech
+```
+
+check out the doc for more information.
