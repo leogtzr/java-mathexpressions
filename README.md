@@ -63,7 +63,9 @@ Operators
 [x] ==
 [x] !=
 [x] <
+[x] << bit shift left
 [x] >
+[x] > bit shift right
 [x] <=
 [x] >=
 [x] &&
