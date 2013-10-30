@@ -5,7 +5,7 @@
 MathExpressions, a library to evaluate math expressions.
 
 
-```
+```java
 Parser parser = new Parser(); 
 
 try { 
@@ -21,7 +21,7 @@ try {
 
 Custom Functions and variables:
 
-```
+```java
 Parser parser = new Parser();
 
 SimpleFunction fibFunc = new SimpleFunction("fibonacci") {
