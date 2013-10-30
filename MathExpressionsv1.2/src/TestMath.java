@@ -16,6 +16,7 @@ public class TestMath {
 
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
+        String exprStr;
 
         Parser parser = new Parser();
 
@@ -35,12 +36,15 @@ public class TestMath {
         parser.addSimpleFunction("fibonacci", fibFunc);
         parser.addVariable("x", 8);
 
-        try {
-            parser.parse("sqrt(fibonacci(x)+4)");
-            double result = parser.getNumericAnswer();
-            System.out.println(result);
-        } catch (ParsingException ex) {
-            System.out.println(ex);
+        while((exprStr = scan.nextLine()) != null) {
+            try {
+                parser.parse(exprStr);
+                double result = parser.getNumericAnswer();
+                System.out.println(result);
+            } catch(ParsingException ex) {
+                System.out.println("Error[" + ex + "]");
+            }
         }
+        
     }
 }

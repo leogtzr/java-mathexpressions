@@ -383,10 +383,10 @@ public final class Parser {
 
             default:
                 if (lex.getToken().charAt(0) == '\u0000' || lex.getToken().isEmpty()) {
-                throw new ParsingException("expected expression", -1, ErrorType.FIN_INESPERADO_EXPRESION);
-            } else {
-                throw new ParsingException("value expected", lex.getPos(), ErrorType.VALOR_ESPERADO);
-            }
+                    throw new ParsingException("expected expression", -1, ErrorType.FIN_INESPERADO_EXPRESION);
+                } else {
+                    throw new ParsingException("value expected", lex.getPos(), ErrorType.VALOR_ESPERADO);
+                }
         }
         return answer;
     }

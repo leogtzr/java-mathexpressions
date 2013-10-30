@@ -144,6 +144,9 @@ public class Lexer {
                     if(expression[i] == '=') {
                         token += expression[i] + "";
                         i++;
+                    } else if(expression[i] == '<') {
+                        token += expression[i] + "";
+                        i++;
                     } 
                     return;
                 case '>':
@@ -152,7 +155,10 @@ public class Lexer {
                     if(expression[i] == '=') {
                         token += expression[i] + "";
                         i++;
-                    } 
+                    } else if(expression[i] == '>') {
+                        token += expression[i] + "";
+                        i++;
+                    }
                     return;
                 case '=':
                     token = expression[i] + "";
