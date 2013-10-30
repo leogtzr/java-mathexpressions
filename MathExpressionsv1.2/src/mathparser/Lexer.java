@@ -142,10 +142,10 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '=') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } else if(expression[i] == '<') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } 
                     return;
@@ -153,10 +153,10 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '=') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } else if(expression[i] == '>') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     }
                     return;
@@ -164,7 +164,7 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '=') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } 
                     return;
@@ -172,7 +172,7 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '=') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } 
                     return;
@@ -181,7 +181,7 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '&') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } else {
                         throw new ParsingException("OPERADOR INCORRECTO " + token, i);
@@ -192,7 +192,7 @@ public class Lexer {
                     token = expression[i] + "";
                     i++;
                     if(expression[i] == '|') {
-                        token += expression[i] + "";
+                        token += expression[i];
                         i++;
                     } else {
                         throw new ParsingException("OPERADOR INCORRECTO " + token, i);
