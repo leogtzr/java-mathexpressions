@@ -1,6 +1,6 @@
 <%-- 
     Document   : index
-    Created on : 23/02/2014, 07:44:15 PM
+    Created on : 23/02/2014, 06:26:17 PM
     Author     : Leo Gutierrez R. <leogutierrezramirez@gmail.com>
 --%>
 
@@ -11,9 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Test Math Lib</title>
+        <title>JSP Page</title>
     </head>
     <body>
+
+        <jsp:scriptlet>
+            request.setAttribute("expr", "2.0 + sin(pi + 0.2");
+        </jsp:scriptlet>
+        
+        <math:parse expression="x^3" x="2" />
+        <hr/>
         
         <math:parse expression="1.5 + pi^2" />
         <hr/>
@@ -38,6 +45,7 @@
             <h1>Error!</h1>
             <h2>${result.message}</h2>
         </c:if>
+        
         
     </body>
 </html>
